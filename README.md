@@ -8,7 +8,7 @@ Parser for AMP web stories
 import requests
 from webstory import Story
 
-html = requests.get('https://www-bbc-co-uk.cdn.ampproject.org/c/s/www.bbc.co.uk/news/ampstories/moonmess/index.html').text
+html = requests.get('https://www.bbc.co.uk/news/ampstories/moonmess/index.html').text
 story = Story(html)
 
 # Story metadata: title, publisher, publisher_logo_src, poster_portrait_src, poster_square_src, poster_landscape_src
