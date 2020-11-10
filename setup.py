@@ -19,5 +19,8 @@ setup(
         "Operating System :: OS Independent",
     ],
     python_requires=">=3.6",
+    install_requires=[
+        "beautifulsoup4>=4.9,<5",
+    ],
     license="BSD",
 )
