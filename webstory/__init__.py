@@ -1,4 +1,7 @@
+import copy
 from bs4 import BeautifulSoup
+
+from .cleaner import StoryPageCleaner
 
 
 class Story:
@@ -34,6 +37,18 @@ class StoryPage:
     @property
     def html(self):
         return str(self._node)
+
+    def get_clean_html(self):
+        # reject <script> tags without an allowed type attribute, as per
+        # https://amp.dev/documentation/guides-and-tutorials/learn/spec/amphtml/?format=websites#html-tags
+        # (we can't do this within a bleach Cleaner instance)
+        node_without_scripts = copy.copy(self._node)
+        for script in node_without_scripts.find_all('script'):
+            if script.get('type') not in ('application/ld+json', 'application/json', 'text/plain'):
+                script.extract()
+
+        html_without_scripts = str(node_without_scripts)
+        return StoryPageCleaner().clean(html_without_scripts)
 
     def __str__(self):
         return "<StoryPage: %s>" % self.id
