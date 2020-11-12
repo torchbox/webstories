@@ -117,6 +117,10 @@ class TestStory(unittest.TestCase):
 
         self.assertEqual(story.pages[0].id, "cover")
 
+    def test_reject_invalid_story(self):
+        with self.assertRaises(Story.InvalidStoryException):
+            Story("<!doctype html><html><head></head><body><p>Not a story</p></body></html>")
+
     def test_clean_html(self):
         story = Story(self.example_html)
         expected_clean_html = """

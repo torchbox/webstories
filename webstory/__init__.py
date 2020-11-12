@@ -5,9 +5,15 @@ from .cleaner import StoryPageCleaner
 
 
 class Story:
+    class InvalidStoryException(ValueError):
+        pass
+
     def __init__(self, html):
         self._dom = BeautifulSoup(html, 'html.parser')
         self._story_node = self._dom.find('amp-story')
+
+        if not self._story_node:
+            raise Story.InvalidStoryException("The passed HTML is not a valid web story")
 
         self.title = self._story_node.get('title')
         self.publisher = self._story_node.get('publisher')
