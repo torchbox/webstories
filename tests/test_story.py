@@ -20,8 +20,7 @@ class TestStory(unittest.TestCase):
         src="https://cdn.ampproject.org/v0/amp-video-0.1.js"></script>
     <script async custom-element="amp-story"
         src="https://cdn.ampproject.org/v0/amp-story-1.0.js"></script>
-    <style amp-custom>
-    </style>
+    <style amp-custom>#page1 {background-color: blue;}</style>
   </head>
   <body>
     <!-- Cover page -->
@@ -114,6 +113,8 @@ class TestStory(unittest.TestCase):
         story = Story(self.example_html)
         self.assertEqual(story.title, "Joy of Pets")
         self.assertEqual(story.publisher, "AMP tutorials")
+
+        self.assertEqual(story.custom_css, "#page1 {background-color: blue;}")
 
         self.assertEqual(story.pages[0].id, "cover")
 

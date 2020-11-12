@@ -27,6 +27,9 @@ class Story:
             for node in self._story_node.find_all('amp-story-page', recursive=False)
         ]
 
+        custom_css_node = self._dom.find('style', attrs={'amp-custom': True})
+        self.custom_css = custom_css_node and custom_css_node.text
+
     def __str__(self):
         return "<Story: %s>" % self.title
 

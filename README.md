@@ -15,6 +15,8 @@ story = Story(html)
 story.title  # "What's left behind on the Moon?"
 story.publisher  # "BBC"
 
+story.custom_css  # text content of the <style amp-custom> element, or None if none exists
+
 # Pages
 page = story.pages[0]
 page.id  # "page-0"
