@@ -22,4 +22,12 @@ page = story.pages[0]
 page.id  # "page-0"
 page.html  # original HTML
 page.get_clean_html()  # HTML filtered to valid AMP content only
+
+# Standalone HTML cleaning
+from webstory import StoryPage
+
+StoryPage.clean_html_fragment(
+    """<amp-story-page id="scary-ghost" onclick="alert('boo')"></amp-story-page>"""
+)
+# returns: '<amp-story-page id="scary-ghost"></amp-story-page>'
 ```

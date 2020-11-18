@@ -1,7 +1,7 @@
 import unittest
 from bs4 import BeautifulSoup
 
-from webstory import Story
+from webstory import Story, StoryPage
 
 
 class TestStory(unittest.TestCase):
@@ -58,6 +58,17 @@ class TestStory(unittest.TestCase):
 </html>
         """
 
+        self.expected_clean_html_good = """
+            <amp-story-page id="page1">
+                <amp-story-grid-layer template="vertical">
+                    <h1>Cats</h1>
+                    <amp-img height="1280" layout="responsive" src="assets/cat.jpg" width="720">
+                    </amp-img>
+                    <q>Dogs come when they're called. Cats take a message and get back to you. --Mary Bly</q>
+                </amp-story-grid-layer>
+            </amp-story-page>
+        """
+
         self.example_bad_html = """
 <!doctype html>
 <html ⚡>
@@ -104,6 +115,21 @@ class TestStory(unittest.TestCase):
 </html>
         """
 
+        self.expected_clean_html_bad = """
+            <amp-story-page id="cover">
+                <amp-story-grid-layer template="fill" data-coffee="yes">
+                    <script type="application/json">{"text": "JSON is OK"}</script>
+                    <amp-img src="assets/cover.jpg" width="720" height="1280" layout="responsive">
+                    </amp-img>
+                </amp-story-grid-layer>
+                <amp-story-grid-layer template="vertical">
+                    <h1>The Joy of Pets</h1>
+                    <p>By AMP Tutorials</p>
+                    <p>look at me, I'm in a form</p>
+                </amp-story-grid-layer>
+            </amp-story-page>
+        """
+
     def assertHTMLEqual(self, str1, str2):
         soup1 = BeautifulSoup(str1.strip(), 'html.parser')
         soup2 = BeautifulSoup(str2.strip(), 'html.parser')
@@ -124,31 +150,29 @@ class TestStory(unittest.TestCase):
 
     def test_clean_html(self):
         story = Story(self.example_html)
-        expected_clean_html = """
-            <amp-story-page id="page1">
-                <amp-story-grid-layer template="vertical">
-                    <h1>Cats</h1>
-                    <amp-img height="1280" layout="responsive" src="assets/cat.jpg" width="720">
-                    </amp-img>
-                    <q>Dogs come when they're called. Cats take a message and get back to you. --Mary Bly</q>
-                </amp-story-grid-layer>
-            </amp-story-page>
-        """
-        self.assertHTMLEqual(story.pages[1].get_clean_html(), expected_clean_html)
+        self.assertHTMLEqual(story.pages[1].get_clean_html(), self.expected_clean_html_good)
 
         story = Story(self.example_bad_html)
-        expected_clean_html = """
+        self.assertHTMLEqual(story.pages[0].get_clean_html(), self.expected_clean_html_bad)
+
+    def test_clean_html_static_method(self):
+        bad_html = """
             <amp-story-page id="cover">
-                <amp-story-grid-layer template="fill" data-coffee="yes">
+                <amp-story-grid-layer template="fill" data-coffee="yes" sugar="no">
+                    <script>alert('evil javascript');</script>
                     <script type="application/json">{"text": "JSON is OK"}</script>
-                    <amp-img src="assets/cover.jpg" width="720" height="1280" layout="responsive">
+                    <amp-img src="assets/cover.jpg"
+                        width="720" height="1280"
+                        layout="responsive">
                     </amp-img>
                 </amp-story-grid-layer>
                 <amp-story-grid-layer template="vertical">
                     <h1>The Joy of Pets</h1>
                     <p>By AMP Tutorials</p>
-                    <p>look at me, I'm in a form</p>
+                    <form>
+                        <p>look at me, I'm in a form</p>
+                    </form>
                 </amp-story-grid-layer>
             </amp-story-page>
         """
-        self.assertHTMLEqual(story.pages[0].get_clean_html(), expected_clean_html)
+        self.assertHTMLEqual(StoryPage.clean_html_fragment(bad_html), self.expected_clean_html_bad)
