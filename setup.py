@@ -5,7 +5,7 @@ setup(
     version="0.0.1",
     packages=["webstories"],
     test_suite="tests",
-
+    url='https://github.com/torchbox/webstories/',
     author="Matt Westcott",
     author_email="matthew@torchbox.com",
     description="Parser for AMP web stories",
