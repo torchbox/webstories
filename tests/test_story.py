@@ -1,7 +1,7 @@
 import unittest
 from bs4 import BeautifulSoup
 
-from webstory import Story, StoryPage
+from webstories import Story, StoryPage
 
 
 class TestStory(unittest.TestCase):

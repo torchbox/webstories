@@ -1,9 +1,9 @@
 from setuptools import setup
 
 setup(
-    name="webstoryparser",
+    name="webstories",
     version="0.0.1",
-    packages=["webstory"],
+    packages=["webstories"],
     test_suite="tests",
 
     author="Matt Westcott",

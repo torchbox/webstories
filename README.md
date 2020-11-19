@@ -1,12 +1,12 @@
-# webstoryparser
+# webstories
 
-Parser for AMP web stories
+Python parser for AMP web stories
 
 ## Usage
 
 ```
 import requests
-from webstory import Story
+from webstories import Story
 
 html = requests.get('https://www.bbc.co.uk/news/ampstories/moonmess/index.html').text
 story = Story(html)
@@ -24,7 +24,7 @@ page.html  # original HTML
 page.get_clean_html()  # HTML filtered to valid AMP content only
 
 # Standalone HTML cleaning
-from webstory import StoryPage
+from webstories import StoryPage
 
 StoryPage.clean_html_fragment(
     """<amp-story-page id="scary-ghost" onclick="alert('boo')"></amp-story-page>"""
