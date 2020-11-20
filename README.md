@@ -4,7 +4,7 @@ Python parser for AMP web stories
 
 ## Usage
 
-```
+```python
 import requests
 from webstories import Story
 
