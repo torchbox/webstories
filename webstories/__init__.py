@@ -28,7 +28,7 @@ class Story:
         ]
 
         custom_css_node = self._dom.find('style', attrs={'amp-custom': True})
-        self.custom_css = custom_css_node and custom_css_node.text
+        self.custom_css = custom_css_node and custom_css_node.string
 
     def __str__(self):
         return "<Story: %s>" % self.title

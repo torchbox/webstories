@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="webstories",
-    version="0.0.1",
+    version="0.0.2",
     packages=["webstories"],
     test_suite="tests",
     url='https://github.com/torchbox/webstories/',
@@ -10,7 +10,7 @@ setup(
     author_email="matthew@torchbox.com",
     description="Parser for AMP web stories",
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Environment :: Web Environment",
         "Intended Audience :: Developers",
         "Programming Language :: Python :: 3",
